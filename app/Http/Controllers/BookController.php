@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Author;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -14,9 +15,14 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::all();
-        return view('books.index', compact('books'));
+        $authors = Author::all();
+        $books = Book::paginate(4); // Fetch 4 books per page
+        return view('books.index', compact('authors', 'books'));
     }
+//    {
+//        $books = Book::all();
+//        return view('books.index', compact('books'));
+//    }
 
     /**
      * Show the form for creating a new resource.
@@ -25,7 +31,7 @@ class BookController extends Controller
      */
     public function create()
     {
-        $authors = Authors::all();
+        $authors = Author::all();
         return view('books.create')->with('authors', $authors);
     }
 
@@ -43,10 +49,10 @@ class BookController extends Controller
         $book->publication_year = $request->input('publication_year');
         $book->save();
 
-        $books = Book::all();
-        $authors = Authors::find($request->authors);
-        $book->authors()->attech($authors);
+        $authors = Author::find($request->authors);
+        $book->authors()->attach($authors);
 
+        $books = Book::all();
         return view('books.index', compact('books'))->with('message', 'Added');
     }
 
@@ -71,8 +77,9 @@ class BookController extends Controller
      */
     public function edit($id)
     {
+        $authors = Author::all();
         $book = Book::find($id);
-        return view('books.edit')->with(['book' => $book]);
+        return view('books.edit')->with(['book' => $book, 'authors'=>$authors]);
 //        return view('books.edit', ['id' => $id]);
     }
 
@@ -91,7 +98,10 @@ class BookController extends Controller
         $book->publication_year = $request->input('publication_year');
         $book->save();
 
-        return redirect()->route('books.index' , compact('book'));
+        $authors = Author::find($request->authors);
+        $book->authors()->attach($authors);
+
+        return redirect()->route('books.index', compact('book'));
     }
 
     /**

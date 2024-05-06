@@ -11,7 +11,7 @@
 <h1 class="display-5 fw-bold text-body-emphasis text-center">Books</h1>
 
 
-@if(!Auth::check())
+@if(Auth::check())
     <div class="container px-5 py-5">
         <h3>
             <a href="{{ route('authors.index') }}" class="pb-2 border-bottom text-dark">Authors</a>
@@ -38,10 +38,11 @@
     </div>
 
 @else
-    <div class="container px-5 py-5">
-        <h3>
-            <a href="{{ route('books.create') }}" class="pb-2 border-bottom text-dark">Create</a>
-        </h3>
+    <div class="container px-5 py-4">
+        <h5>
+            <a href="{{ route('books.create') }}" class="pb-2 border-bottom text-dark">Create</a>  |
+            <a href="{{ route('books.create') }}" class="pb-2 border-bottom text-blue">Log out</a>
+        </h5>
         <div class="row row-cols-1 row-cols-md-4 g-5">
             @foreach($books as $book)
                 <div class="col">
@@ -56,6 +57,14 @@
                             <ul class="list-unstyled">
                                 <li><strong>Publication Year:</strong> {{ $book->publication_year }}</li>
                             </ul>
+                                <strong>Author:</strong>
+                            <span id="selectedAuthor"></span>
+
+                            @if ($book->author)
+                                {{ $book->author->first_name }} {{ $book->author->last_name }}
+                            @else
+                                No author specified
+                            @endif
                         </div>
                         <div class="card-footer bg-white border-0">
                             <a href="{{ route('books.show', ['book' => $book->id]) }}" class="btn btn-outline-primary me-2">View</a>
@@ -72,30 +81,9 @@
         </div>
     </div>
 @endif
-
-
-
-
-{{--<div>--}}
-
-{{--    <ul>--}}
-{{--        @foreach($books as $book)--}}
-{{--            <li>--}}
-{{--                <strong>Title:</strong> {{ $book->title }}<br>--}}
-{{--                <strong>Description:</strong> {{ $book->description }}<br>--}}
-{{--                <strong>Publication Year:</strong> {{ $book->publication_year }}<br>--}}
-{{--                <a href="{{ route('books.show', ['book' => $book->id]) }}">View</a> |--}}
-{{--                <a href="{{ route('books.edit', ['book' => $book->id]) }}">Edit</a> |--}}
-{{--                <form action="{{ route('books.destroy', ['book' => $book->id]) }}" method="post">--}}
-{{--                    @csrf--}}
-{{--                    @method('DELETE')--}}
-{{--                    <button type="submit">Delete</button>--}}
-{{--                </form>--}}
-{{--            </li>--}}
-{{--        @endforeach--}}
-{{--    </ul>--}}
-{{--</div>--}}
-
+<div class="d-flex justify-content-center">
+    {{ $books->links() }}
+</div>
 
 </body>
 </html>

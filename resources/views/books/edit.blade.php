@@ -22,6 +22,14 @@
         <div class="mb-3">
             <input type="number" class="form-control" name="publication_year" placeholder="Publication Year" value="{{ $book->publication_year }}" style="border-color: #4a5568; width: 50%;">
         </div>
+        <div class="mb-3">
+            <select class="form-select" id="authorSelect" style="border-color: #4a5568; width: 50%;" onchange="updateSelectedAuthor()">
+                @foreach($authors as $author)
+                    <option value="{{ $author->id }}">{{ $author->first_name }} {{ $author->last_name }}</option>
+                @endforeach
+            </select>
+        </div>
+
         <button type="submit" class="btn btn-primary" style="background-color: #4a5568; border-color: #4a5568;">Submit</button>
     </form>
 </div>

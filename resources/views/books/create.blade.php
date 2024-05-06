@@ -25,11 +25,24 @@
             <label for="description" class="form-label">Description</label>
             <textarea class="form-control" id="description" name="description" placeholder="Description" rows="4" style="border-color: #4a5568; width: 50%;"></textarea>
         </div>
+        <div class="mb-3">
+            <select class="form-select" id="authorSelect" style="border-color: #4a5568; width: 50%;" onchange="updateSelectedAuthor()">
+                @foreach($authors as $author)
+                    <option value="{{ $author->id }}">{{ $author->first_name }} {{ $author->last_name }}</option>
+                @endforeach
+            </select>
+        </div>
         <button type="submit" class="btn btn-primary" style="background-color: #4a5568; border-color: #4a5568;">Submit</button>
     </form>
 </div>
 
-
+<script>
+    function updateSelectedAuthor() {
+        var selectElement = document.getElementById("authorSelect");
+        var selectedAuthor = selectElement.options[selectElement.selectedIndex].text;
+        sessionStorage.setItem('selectedAuthor', selectedAuthor);
+    }
+</script>
 
 
 

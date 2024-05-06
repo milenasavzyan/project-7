@@ -15,7 +15,7 @@ class UserController extends Controller
             return redirect()->route('books.index');
         }
 
-        echo '1';
+        echo '<h2>Wrong username or password</h2>';
     }
 }
 
