@@ -36,13 +36,6 @@
     </form>
 </div>
 
-<script>
-    function updateSelectedAuthor() {
-        var selectElement = document.getElementById("authorSelect");
-        var selectedAuthor = selectElement.options[selectElement.selectedIndex].text;
-        sessionStorage.setItem('selectedAuthor', selectedAuthor);
-    }
-</script>
 
 
 

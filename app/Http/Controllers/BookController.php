@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Book;
 use App\Models\Author;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateBookRequest;
 
 class BookController extends Controller
 {
@@ -90,20 +91,17 @@ class BookController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateBookRequest $request, $id)
     {
         $book = Book::find($id);
-        $book->title = $request->input('title');
-        $book->description = $request->input('description');
-        $book->publication_year = $request->input('publication_year');
+        $book->fill($request->only(['title', 'description', 'publication_year']));
         $book->save();
 
         $authors = Author::find($request->authors);
-        $book->authors()->attach($authors);
+        $book->authors()->sync($authors);
 
         return redirect()->route('books.index', compact('book'));
     }
-
     /**
      * Remove the specified resource from storage.
      *

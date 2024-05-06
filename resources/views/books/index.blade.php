@@ -11,7 +11,7 @@
 <h1 class="display-5 fw-bold text-body-emphasis text-center">Books</h1>
 
 
-@if(Auth::check())
+@if(!Auth::check())
     <div class="container px-5 py-5">
         <h3>
             <a href="{{ route('authors.index') }}" class="pb-2 border-bottom text-dark">Authors</a>
