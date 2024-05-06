@@ -17,13 +17,9 @@ class BookController extends Controller
     public function index()
     {
         $authors = Author::all();
-        $books = Book::paginate(4); // Fetch 4 books per page
+        $books = Book::paginate(4);
         return view('books.index', compact('authors', 'books'));
     }
-//    {
-//        $books = Book::all();
-//        return view('books.index', compact('books'));
-//    }
 
     /**
      * Show the form for creating a new resource.
