@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use Illuminate\Http\Request;
+use App\Http\Requests\UpdateAuthorRequest;
 
 class AuthorController extends Controller
 {
@@ -80,7 +81,7 @@ class AuthorController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateAuthorRequest  $request, $id)
     {
         $author = Author::find($id);
         $author->fill($request->only(['first_name', 'last_name', 'biography']));
