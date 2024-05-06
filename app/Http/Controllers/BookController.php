@@ -16,9 +16,8 @@ class BookController extends Controller
      */
     public function index()
     {
-        $authors = Author::all();
         $books = Book::paginate(4);
-        return view('books.index', compact('authors', 'books'));
+        return view('books.index', compact('books'));
     }
 
     /**
@@ -77,7 +76,6 @@ class BookController extends Controller
         $authors = Author::all();
         $book = Book::find($id);
         return view('books.edit')->with(['book' => $book, 'authors'=>$authors]);
-//        return view('books.edit', ['id' => $id]);
     }
 
     /**
